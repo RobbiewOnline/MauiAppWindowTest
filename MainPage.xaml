@@ -10,25 +10,30 @@
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+                Aspect="AspectFit" />
 
             <Label
-                Text="Will transition automatically in 5 seconds!!"
+                Text="Will transition to BLUE automatically in 5 seconds!!"
                 Style="{StaticResource Headline}" />
 
             <Button
                 Text="Manual - Push Fuchsia via nav" 
+                BackgroundColor="Fuchsia"
+                TextColor="White"
                 Clicked="FuchsiaPushOntoNavClicked"
                 HorizontalOptions="Fill" />
 
             <Button
                 Text="Manual - Red Page via window" 
+                BackgroundColor="Red"
+                TextColor="White"
                 Clicked="RedPageViaWindowClicked"
                 HorizontalOptions="Fill" />
 
             <Button
                 Text="Manual - Green Page via window" 
+                BackgroundColor="Green"
+                TextColor="White"
                 Clicked="GreenPageViaWindowClicked"
                 HorizontalOptions="Fill" />
 

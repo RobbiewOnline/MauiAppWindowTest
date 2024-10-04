@@ -40,17 +40,68 @@ dotnet build -t:Run -p:Configuration=Release -f net9.0-android35.0 -p:AdbTarget=
 
 ## Logging when working
 
+(I press the button for red background whilst waiting for it to transition)
+
 ```
-TBD
+[DUMMY-PROJ] MainApplication - constructor hit
+[DUMMY-PROJ] MainApplication - CreateMauiApp invoked
+[DUMMY-PROJ] MauiProgram - CreateMauiApp creating builder..
+[DUMMY-PROJ] MauiProgram - CreateMauiApp creating builder - adding debug
+[DUMMY-PROJ] MauiProgram - CreateMauiApp creating builder - returning build
+[DUMMY-PROJ] MainApplication - CreateMauiApp invoked - done
+[DUMMY-PROJ] App - constructor
+[DUMMY-PROJ] App - constructor - done
+[DUMMY-PROJ] App - CreateWindow
+[DUMMY-PROJ] MainPage - constructor
+[DUMMY-PROJ] MainPage - constructor - starting background task
+[DUMMY-PROJ] MainPage - constructor - starting background task - done
+[DUMMY-PROJ] App - CreateWindow - target page prepped
+[DUMMY-PROJ] MainPage - constructor - starting background task - waiting 5s
+[DUMMY-PROJ] App - CreateWindow - window prepped, returning window
+[DUMMY-PROJ] MainPage - RedPageViaWindowClicked, requesting transition on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, requesting transition, ensuring on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, now on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, replacing window with page:MauiAppWindowTest.NextPage (colour:[Color: Red=1, Green=0, Blue=0, Alpha=1])
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, transition done
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT - done
+[DUMMY-PROJ] MainPage - RedPageViaWindowClicked, requesting transition on EDT - done
+[DUMMY-PROJ] MainPage - constructor - on background task - creating new page
+[DUMMY-PROJ] MainPage - constructor - on background task - requesting transition on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, requesting transition, ensuring on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT - done
+[DUMMY-PROJ] MainPage - constructor - on background task - requesting transition on EDT - done
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, now on EDT
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, replacing window with page:MauiAppWindowTest.NextPage (colour:[Color: Red=0, Green=0, Blue=1, Alpha=1])
+[DUMMY-PROJ] MainPage - ChangeRootPageOnEDT, transition done
 ```
 
 ## Logging when not working
 
 ### Debug
 
+Version running in DEBUG mode from VSCode...
+
 ```
-TBD
+10-04 16:55:28.711 16972 17020 I DUMMY-PROJ: MainPage - constructor - on background task - creating new page
+10-04 16:55:28.745 16972 17062 D ProfileInstaller: Installing profile for com.companyname.mauiappwindowtest
+10-04 16:55:28.746 16972 17020 I uiappwindowtest: Explicit concurrent copying GC freed 1247KB AllocSpace bytes, 4(144KB) LOS objects, 60% free, 4090KB/10234KB, paused 70us,20us total 18.300ms
+10-04 16:55:28.750 16972 17020 I DUMMY-PROJ: MainPage - constructor - on background task - requesting transition on EDT
+10-04 16:55:28.750 16972 17020 I DUMMY-PROJ: MainPage - ChangeRootPageOnEDT, requesting transition, ensuring on EDT
+10-04 16:55:28.754 16972 17020 I DUMMY-PROJ: MainPage - ChangeRootPageOnEDT - done
+10-04 16:55:28.754 16972 17020 I DUMMY-PROJ: MainPage - constructor - on background task - requesting transition on EDT - done
+10-04 16:55:28.754 16972 16972 I DUMMY-PROJ: MainPage - ChangeRootPageOnEDT, now on EDT
+10-04 16:55:28.760 16972 16972 I DUMMY-PROJ: MainPage - ChangeRootPageOnEDT, replacing window with page:MauiAppWindowTest.NextPage (colour:[Color: Red=0, Green=0, Blue=1, Alpha=1])
+10-04 16:55:28.766 16972 16972 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-04 16:55:28.766 16972 16972 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-04 16:55:28.778  1073  1212 I VSyncReactor: Current= 60, Period= 60, hwcPeriod= 60
+10-04 16:55:28.783 16972 16972 I DUMMY-PROJ: MainPage - ChangeRootPageOnEDT, transition done
 ```
+
+Then I killed the app by OS menu, then swiping it away.
+
+When I launched the app the splash screen appeared, but nothing transitioned and ***not one line*** of debugging was output!...
+
+Instead here's the raw device [logcat logs](logcat.md) ...
 
 ### Release
 

@@ -1,0 +1,105 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android35.0</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>MauiAppWindowTest</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>MauiAppWindowTest</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.mauiappwindowtest</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0-rc.1.24453.9" />
+		<!-- <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" /> -->
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0-rc.1.24431.7" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)' == 'Debug|net9.0-android35.0'">
+    	<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+	</PropertyGroup>	
+
+	<!-- The WarningLevel element controls the strictness of the compiler about expression evaluation,
+	method calling, assignment operations etc. The value 4 is the highest warning level and means that
+	all warnings that are typically considered important should be reported.-->
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
+
+		<!-- For the Samsung Galaxy S21 5G = android-arm64 (for 64-bit ARM, which is the architecture of both Snapdragon 888 and Exynos 2100) -->
+		<RuntimeIdentifier>android-arm64</RuntimeIdentifier> 
+
+		<!-- 
+			To ensure we target as many phone variants as possible for Google Play
+
+			•	android-arm: Targets ARMv7 (32-bit) architecture.
+			•	android-arm64: Targets ARMv8-A (64-bit) architecture (arm64-v8a).
+			•	android-x86: Targets Intel’s 32-bit architecture.
+			•	android-x64: Targets Intel’s 64-bit architecture (x86_64).
+		-->
+		<!-- <RuntimeIdentifiers>android-arm;android-arm64;android-x86;android-x64</RuntimeIdentifiers> -->
+
+		<!-- 
+			AndroidLinkTool : r8
+
+			Based on https://devblogs.microsoft.com/dotnet/performance-improvements-in-dotnet-maui/
+
+			If launching a RELEASE build of your application crashes after enabling this, review adb logcat output to see what went wrong.
+
+			- /Users/rob/Library/Android/sdk/platform-tools/adb logcat -c && /Users/rob/Library/Android/sdk/platform-tools/adb logcat | tee logcat.log
+
+			If you see a java.lang.ClassNotFoundException or java.lang.MethodNotFoundException, you may need to add to the ProguardConfiguration file
+		-->
+		<AndroidLinkTool>none</AndroidLinkTool> <!-- Shrinking - r8 -->
+		<!-- <ProguardConfiguration Include="proguard.cfg" /> -->
+
+		<AndroidDexTool>none</AndroidDexTool> <!-- Dexing d8 -->
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode> <!-- Only removes unused code from the SDK assemblies (not our app)-->
+		<AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi> <!-- Google Play can generate optimized APKs from your AAB for different device configurations -->
+		<AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent> <!-- This can lead to reduced pause times during garbage collection -->
+		<AndroidUseAapt2>true</AndroidUseAapt2> <!-- for more efficient resource processing -->
+		<AndroidPackageFormat>aab</AndroidPackageFormat> <!-- AAB means Google can generate various APKs -->
+
+		<RunAOTCompilation>false</RunAOTCompilation> <!-- For better performance -->
+		<AndroidEnableProfiledAot>false</AndroidEnableProfiledAot> <!-- for a balance between performance and app size -->
+
+		<!-- Debug symbols to help analyze crashes and ANRs (Application Not Responding errors) more effectively -->
+		<DebugSymbols>true</DebugSymbols> <!-- Ensures symbols are generated - if doesn't work can use 'full' or 'pdbonly' -->
+		<DebugType>portable</DebugType>   <!-- Uses portable PDBs -->
+		<AndroidIncludeDebugSymbols>true</AndroidIncludeDebugSymbols> <!-- Include native debug symbols -->
+	</PropertyGroup>
+
+</Project>

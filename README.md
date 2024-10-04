@@ -15,6 +15,8 @@
  - The app will launch, with dotnet purple background but will not show the initial page (set in App.xaml.cs in `return new Window(new MainPage());`)
  - Quit & restart x 3 - by now usually it starts working!
 
+Note that whether you interactively click a button to transition to another page, or not, the app should transition to a blue-background page in 5 seconds.  When the app fails to transition it doesn't do this, but then the initial page isn't displayed either.  It's as though the call to `CreateWindow` doesn't happen, or constructing of the `MainPage` fails
+
 ## Environment
 
 - DotNet 9 RC 1 (9.0.100-rc.1.24452.12)
@@ -44,6 +46,15 @@ TBD
 
 ## Logging when not working
 
+### Debug
+
 ```
 TBD
 ```
+
+### Release
+
+```
+TBD - Can't sodding re-create, but this is the scenario I'm trying hard to re-create!
+```
+

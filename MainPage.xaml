@@ -13,30 +13,40 @@
                 Aspect="AspectFit" />
 
             <Label
-                Text="Will transition to BLUE automatically in 5 seconds!!"
+                Text="Testing Android loosing Windows references"
                 Style="{StaticResource Headline}" />
 
             <Button
-                Text="Manual - Push Fuchsia via nav" 
-                BackgroundColor="Fuchsia"
-                TextColor="White"
-                Clicked="FuchsiaPushOntoNavClicked"
+                Text="Request Location Permission"
+                Clicked="RequestPermissionClicked"
                 HorizontalOptions="Fill" />
 
             <Button
-                Text="Manual - Red Page via window" 
-                BackgroundColor="Red"
-                TextColor="White"
-                Clicked="RedPageViaWindowClicked"
+                Text="Request Camera Permission"
+                Clicked="RequestCameraPermissionClicked"
                 HorizontalOptions="Fill" />
 
             <Button
-                Text="Manual - Green Page via window" 
-                BackgroundColor="Green"
-                TextColor="White"
-                Clicked="GreenPageViaWindowClicked"
+                Text="Request Notification Permission"
+                Clicked="RequestNotificationPermissionClicked"
                 HorizontalOptions="Fill" />
 
+            <Label
+                Text="Windows List:"
+                FontAttributes="Bold" />
+
+            <CollectionView ItemsSource="{Binding WindowsList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button
+                Text="Force refresh"
+                Clicked="RefreshClicked"
+                HorizontalOptions="Fill" />
 
         </VerticalStackLayout>
     </ScrollView>

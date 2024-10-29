@@ -1,15 +1,33 @@
-# MauiAppWindowTest
+# Problems
 
-## Problem
+## Windows array becoming empty
 
 I'm finding that the 'new' way of using the Application.Current.Windows often returns an empty array after the app is backgrounded, likely due to requesting permissions from the user.
 
-## How to re-create
+### How to re-create
+
+(actually can't re-create in this sample app)
 
  - Run the app (debug is fine)
  - The windows array is populated with one Window
  - Request the permission (the app is backgrounded)
  - When resuming the list of Windows is cleared
+
+## Segfault
+
+See GitHub issue 25446 https://github.com/dotnet/maui/issues/25446
+
+I suspect it's when the internet connectivity status changes 
+
+### How to re-create
+
+(actually not yet re-created in this sample app)
+
+ - Run the app in release mode
+ - Toggle wifi on/off
+ - The app crashes
+
+
 
 ## Environment
 

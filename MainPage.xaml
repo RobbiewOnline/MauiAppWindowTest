@@ -3,52 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppWindowTest.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit" />
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="30,0"
+                Spacing="25">
+                <Image
+                    Source="dotnet_bot.png"
+                    HeightRequest="185"
+                    Aspect="AspectFit" />
 
-            <Label
-                Text="Testing Android loosing Windows references"
-                Style="{StaticResource Headline}" />
+                <Label
+                    Text="Testing Android loosing Windows references &amp; SigFault with internet connectivity"
+                    Style="{StaticResource Headline}" />
 
-            <Button
-                Text="Request Location Permission"
-                Clicked="RequestPermissionClicked"
-                HorizontalOptions="Fill" />
+                <Button
+                    Text="Request Location Permission"
+                    Clicked="RequestPermissionClicked"
+                    HorizontalOptions="Fill" />
 
-            <Button
-                Text="Request Camera Permission"
-                Clicked="RequestCameraPermissionClicked"
-                HorizontalOptions="Fill" />
+                <Button
+                    Text="Request Camera Permission"
+                    Clicked="RequestCameraPermissionClicked"
+                    HorizontalOptions="Fill" />
 
-            <Button
-                Text="Request Notification Permission"
-                Clicked="RequestNotificationPermissionClicked"
-                HorizontalOptions="Fill" />
+                <Button
+                    Text="Request Notification Permission"
+                    Clicked="RequestNotificationPermissionClicked"
+                    HorizontalOptions="Fill" />
 
-            <Label
-                Text="Windows List:"
-                FontAttributes="Bold" />
+                <Label
+                    Text="Windows List:"
+                    FontAttributes="Bold" />
 
-            <CollectionView ItemsSource="{Binding WindowsList}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <CollectionView ItemsSource="{Binding WindowsList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <Button
-                Text="Force refresh"
-                Clicked="RefreshClicked"
-                HorizontalOptions="Fill" />
+                <Button
+                    Text="Force refresh"
+                    Clicked="RefreshClicked"
+                    HorizontalOptions="Fill" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border BackgroundColor="#AA000000"
+                IsVisible="{Binding HasNoInternet}"
+                VerticalOptions="Start"
+                Margin="0,10"
+                Padding="20,10"
+                HorizontalOptions="Center">
+            <Label Text="There's NO internet"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+        </Border>
+    </Grid>
 
 </ContentPage>

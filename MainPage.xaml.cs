@@ -1,17 +1,38 @@
 ﻿using System.Collections.ObjectModel;
-using Microsoft.Maui.Devices.Sensors;
+using System.ComponentModel;
 
 namespace MauiAppWindowTest;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : ContentPage, INotifyPropertyChanged
 {
-	public ObservableCollection<string> WindowsList { get; set; } = new ObservableCollection<string>();
+    private bool hasNoInternet;
+    public bool HasNoInternet
+    {
+        get => hasNoInternet;
+        set
+        {
+            hasNoInternet = value;
+            OnPropertyChanged();
+        }
+    }
 
+	public ObservableCollection<string> WindowsList { get; set; } = new ObservableCollection<string>();
+	
 	public MainPage()
 	{
 		InitializeComponent();
 		BindingContext = this;
 		UpdateWindowsList();
+		
+		// Add connectivity monitoring
+		Connectivity.Current.ConnectivityChanged += Connectivity_ConnectivityChanged;
+		// Check initial state
+		HasNoInternet = Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
+	}
+
+	private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+	{
+		HasNoInternet = Connectivity.Current.NetworkAccess != NetworkAccess.Internet;
 	}
 
 	private async void RequestPermissionClicked(object sender, EventArgs e)
@@ -86,5 +107,12 @@ public partial class MainPage : ContentPage
 	{
 		base.OnAppearing();
 		UpdateWindowsList();
+	}
+
+	// Don't forget to cleanup
+	protected override void OnDisappearing()
+	{
+		base.OnDisappearing();
+		Connectivity.Current.ConnectivityChanged -= Connectivity_ConnectivityChanged;
 	}
 }
